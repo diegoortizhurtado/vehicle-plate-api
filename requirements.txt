@@ -1,7 +1,8 @@
 fastapi
 uvicorn
-torch
-torchvision
+torch==2.2.0+cpu
+torchvision==0.17.0+cpu
+--extra-index-url https://download.pytorch.org/whl/cpu
 ultralytics
 easyocr
 opencv-python-headless
