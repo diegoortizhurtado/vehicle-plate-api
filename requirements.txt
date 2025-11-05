@@ -1,10 +1,4 @@
 fastapi
-uvicorn
-torch==2.9.0+cpu
-torchvision==0.24.0+cpu
---extra-index-url https://download.pytorch.org/whl/cpu
-ultralytics
-easyocr
-opencv-python-headless
-pillow
-numpy
+uvicorn[standard]
+sqlmodel
+passlib[bcrypt]
