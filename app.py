@@ -5,6 +5,7 @@ import secrets
 import hashlib
 
 from fastapi import FastAPI, HTTPException, Header, Depends, status
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, constr
 from sqlmodel import SQLModel, Field, create_engine, Session, select
 from passlib.context import CryptContext
@@ -16,6 +17,24 @@ engine = create_engine(DATABASE_URL, echo=False)
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 app = FastAPI(title="Railey Auth API")
+
+# ---------- 🔐 CORS middleware ----------
+origins = [
+    "http://localhost:5173",  # React local (vite)
+    "https://vehicle-plate-app-production.up.railway.app",  # tu frontend desplegado
+    "https://vehicle-plate-api-production.up.railway.app",  # tu API pública
+]
+
+# Si quieres permitir cualquier origen durante desarrollo (más simple):
+# origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,          # dominios permitidos
+    allow_credentials=True,
+    allow_methods=["*"],            # permite todos los métodos HTTP
+    allow_headers=["*"],            # permite todos los headers
+)
 
 # ---------- DB models ----------
 class User(SQLModel, table=True):
